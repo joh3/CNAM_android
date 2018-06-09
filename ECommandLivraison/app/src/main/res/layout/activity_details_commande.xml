@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:clickable="false">
+
+        <Button
+            android:id="@+id/btn_validation_commande"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewpager"
+            android:layout_gravity="bottom|left"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorError"
+            android:text="@string/annul_btn"
+            android:textColor="@android:color/white"
+            app:layout_anchorGravity="bottom"
+            tools:layout_editor_absoluteY="463dp" />
+
+        <Button
+            android:id="@+id/btn_annulation_commande"
+            android:layout_width="207dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/viewpager"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/btn_validation_commande"
+            android:background="@color/colorAccent"
+            android:text="@string/valid_btn"
+            android:textColor="@android:color/white"
+            app:layout_anchorGravity="bottom"
+            tools:layout_editor_absoluteY="463dp" />
+    </RelativeLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:layout_editor_absoluteY="48dp">
+
+    </android.support.v4.view.ViewPager>
+
+</android.support.design.widget.CoordinatorLayout>

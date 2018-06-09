@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Livraison</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Nom d\'utilisateur</string>
+    <string name="nav_header_subtitle">Email</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Actualiser</string>
+    <string name="btn_validation">Cloturer la tournée</string>
+    <string name="title_activity_login">Connexion</string>
+    <string name="numero_pizzeria">0987845698</string>
+    <string name="ip">192.168.1.53</string>
+    <string name="valid_btn">Valider</string>
+    <string name="annul_btn">Annuler</string>
+    <string name="title_activity_detail_commande">Commande </string>
+</resources>

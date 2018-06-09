@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="3"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"> <!-- nombre de colonnes -->
+
+        <TextView
+            android:id="@+id/libArticle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:padding="4dp"
+            android:text="Margarita"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/qteArticle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="3"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/prixArticle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="10€"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

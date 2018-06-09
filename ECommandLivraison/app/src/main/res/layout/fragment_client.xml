@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/headNomCli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Nom Prénom"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/valNomCli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/headEmaCli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Email"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/valEmaCli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/headTelCli"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Téléphone"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/valTelCli"
+            android:layout_width="215dp"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="18sp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabPhone"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="-30dp"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_phone_white_24dp" />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

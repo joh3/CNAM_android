@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/ordreLiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:width="50dp"
+            android:height="50dp"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@android:color/background_light"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/numero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/ordreLiv"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/ordreLiv"
+            android:text="Identifiant de la commande"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/adresse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/numero"
+            android:layout_below="@+id/numero"
+            android:text="Adresse de livraison"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

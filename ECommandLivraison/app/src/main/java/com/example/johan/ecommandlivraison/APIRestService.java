@@ -1,14 +1,21 @@
 package com.example.johan.ecommandlivraison;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface APIRestService {
-
-    public static final String ENDPOINT = "http://192.168.1.53:3000/";
 
     @GET("client/commande/{idCommande}")
     Call<List<Client>> infoClient(@Path("idCommande") String idCommande);
@@ -21,4 +28,8 @@ public interface APIRestService {
 
     @GET("article/commande/{idCommande}")
     Call<List<Article>> listeArticle(@Path("idCommande") String idCommande);
+
+    @FormUrlEncoded
+    @POST("commande/livraison/")
+    Call<Object> postEtatCmd(@Field("idCommande") String idCommande, @Field("etatCommande") String etatCommande);
 }

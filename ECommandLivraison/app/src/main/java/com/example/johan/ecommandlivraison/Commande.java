@@ -12,16 +12,46 @@ public class Commande implements Serializable {
     private String ville;
     private int ordre;
     private List<Article> articles = new ArrayList<Article>();
+    private int idTournee;
+    private boolean isLivre;
+    private String etatCommande;
 
     public Commande(){}
 
-    public Commande(int idCommande, float prixTotal, String adresse, String codePostal, String ville, int ordre) {
+    public Commande(int idCommande, float prixTotal, String adresse, String codePostal, String ville, int ordre, int idTournee, boolean isLivre, String etatCommande) {
         this.idCommande = idCommande;
         this.prixTotal = prixTotal;
         this.adresse = adresse;
         this.codePostal = codePostal;
         this.ville = ville;
         this.ordre = ordre;
+        this.idTournee = idTournee;
+        this.isLivre = isLivre;
+        this.etatCommande = etatCommande;
+    }
+
+    public String getEtatCommande() {
+        return etatCommande;
+    }
+
+    public void setEtatCommande(String etatCommande) {
+        this.etatCommande = etatCommande;
+    }
+
+    public boolean isLivre() {
+        return isLivre;
+    }
+
+    public void setLivre(boolean livre) {
+        isLivre = livre;
+    }
+
+    public int getIdTournee() {
+        return idTournee;
+    }
+
+    public void setIdTournee(int idTournee) {
+        this.idTournee = idTournee;
     }
 
     public int getIdCommande() {

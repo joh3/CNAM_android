@@ -29,7 +29,6 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         }
         TextView libelle = (TextView) row.findViewById(R.id.libArticle);
         TextView prix = (TextView) row.findViewById(R.id.prixArticle);
-
         Article item = values.get(position);
         libelle.setText(item.getLibelle());
         prix.setText(""+item.getPrixHT()+" €");

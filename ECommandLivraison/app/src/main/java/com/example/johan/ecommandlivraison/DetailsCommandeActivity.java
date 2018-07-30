@@ -1,12 +1,11 @@
 package com.example.johan.ecommandlivraison;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,11 +14,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,6 +35,7 @@ public class DetailsCommandeActivity extends AppCompatActivity {
     Commande cmd;
     Client cli;
     APIRestService instanceAPI;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +58,44 @@ public class DetailsCommandeActivity extends AppCompatActivity {
 
         remplirInfoClient(instanceAPI, cmd.getIdCommande()+"");
         remplirInfoArticles(instanceAPI,cmd.getIdCommande()+"");
+
+        Button btnValid= (Button) findViewById(R.id.btn_validation_commande);
+        btnValid.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DetailsCommandeActivity.this, "Validation de la bonne livraison...",Toast.LENGTH_SHORT).show();
+                setEtatCommande(cmd.getIdCommande()+"","Livrée");
+            }
+        });
+
+        Button btnAnnul= (Button) findViewById(R.id.btn_annulation_commande);
+        btnAnnul.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(DetailsCommandeActivity.this, "Validation d'un problème lors de la livraison...",Toast.LENGTH_SHORT).show();
+                setEtatCommande(cmd.getIdCommande()+"","Non livrée");
+            }
+        });
     }
+
+    private void setEtatCommande(String idCommande, String etatCommande) {
+        //changer l'état de la commande avec un post
+
+        Call<Object> request = instanceAPI.postEtatCmd(idCommande,etatCommande);
+        request.enqueue(new Callback<Object>(){
+            @Override
+            public void onResponse(Call<Object> request, Response<Object> response) {
+                Log.d("DEBUG", response.toString());
+                finish();
+            }
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+                Log.d("Message2", t.toString());
+                Log.d("Message2", "onResponse: " + call.request().toString());
+            }
+        });
+    }
+
     private void setViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ClientFragment(),"Client");
@@ -66,8 +104,10 @@ public class DetailsCommandeActivity extends AppCompatActivity {
     }
 
     public APIRestService initAPIService(){
+        SharedPreferences prfs = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        String IP = prfs.getString("IP", "192.168.1.20");
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://"+getString(R.string.ip)+":3000/")
+                .baseUrl("http://"+IP+":3000/")
                 .addConverterFactory(GsonConverterFactory.create());
         Retrofit retrofit = builder.build();
         return retrofit.create(APIRestService.class);
@@ -75,37 +115,49 @@ public class DetailsCommandeActivity extends AppCompatActivity {
 
     public void remplirInfoClient(APIRestService api, String idCommande){
         Call<List<Client>> call = api.infoClient(idCommande);
-        call.enqueue(new Callback<List<Client>>(){
+        call.enqueue(new Callback<List<Client>>() {
             @Override
             public void onResponse(Call<List<Client>> call, Response<List<Client>> response) {
                 List<Client> clients = response.body();
-                if (clients.get(0)!=null) {
+                if (clients.get(0) != null) {
                     cli = clients.get(0);
-                    //nom+prenom cli dans tab commande
-                    TextView nomCli = (TextView) findViewById(R.id.valNomCli);
+                }
+                //nom+prenom cli dans tab commande
+                TextView nomCli = (TextView) findViewById(R.id.valNomCli);
+                if ((cli.getNom() != null) && (cli.getPrenom() != null)) {
                     nomCli.setText(cli.getNom() + " " + cli.getPrenom());
-
-                    //email cli dans tab commande
-                    TextView emaCli = (TextView) findViewById(R.id.valEmaCli);
+                }
+                else{
+                    nomCli.setText("Aucun nom");
+                }
+                //email cli dans tab commande
+                TextView emaCli = (TextView) findViewById(R.id.valEmaCli);
+                if (cli.getEmail() != null) {
                     emaCli.setText(cli.getEmail());
+                } else {
+                    emaCli.setText("aucun email");
+                }
 
-                    //tel liv dans nav
-                    TextView telCli = (TextView) findViewById(R.id.valTelCli);
+                //tel liv dans nav
+                TextView telCli = (TextView) findViewById(R.id.valTelCli);
+                if (cli.getNumTel() != null) {
                     telCli.setText(cli.getNumTel());
-                    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabPhone);
+                } else {
+                    cli.setNumTel("");
+                    telCli.setText(cli.getNumTel());
+                }
 
-                    fab.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + cli.getNumTel()));
-                            startActivity(phoneIntent);
-                        }
-                    });
-                }
-                else {
-                    Toast.makeText(DetailsCommandeActivity.this, "Error: Aucun client", Toast.LENGTH_SHORT).show();
-                }
+                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabPhone);
+
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent phoneIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + cli.getNumTel()));
+                        startActivity(phoneIntent);
+                    }
+                });
             }
+
             @Override
             public void onFailure(Call<List<Client>> call, Throwable t) {
                 Log.d("Message2", t.toString());
@@ -128,9 +180,6 @@ public class DetailsCommandeActivity extends AppCompatActivity {
                     TextView somme = (TextView) findViewById(R.id.sommeArticle);
                     somme.setText(cmd.sommePrix() + "€");
                     Log.d("SOMMEEEEEE", cmd.sommePrix() + "");
-                }
-                else {
-                    Toast.makeText(DetailsCommandeActivity.this, "Error: Aucun article", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -159,7 +208,4 @@ public class DetailsCommandeActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
-
 }

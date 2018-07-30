@@ -8,6 +8,10 @@
             android:id="@+id/nav_exit"
             android:icon="@drawable/ic_exit_to_app_black_24dp"
             android:title="Déconnexion" />
+        <item
+            android:id="@+id/nav_params"
+            android:icon="@drawable/ic_settings_black_24dp"
+            android:title="Paramètres" />
     </group>
 
 </menu>

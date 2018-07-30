@@ -23,22 +23,29 @@ public class CommandeAdapter extends ArrayAdapter<Commande> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
+        Commande item = values.get(position);
         if (row == null) {
             LayoutInflater inflater =
                     (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            row = inflater.inflate(R.layout.row_layout, parent, false);
+
+            if(  (item.getEtatCommande().equalsIgnoreCase("Livrée")) || (item.getEtatCommande().equalsIgnoreCase("Non livrée")) ){
+                row = inflater.inflate(R.layout.row_layout_livre, parent, false);
+            }
+            else{
+                row = inflater.inflate(R.layout.row_layout, parent, false);
+            }
         }
         TextView adresse = (TextView) row.findViewById(R.id.adresse);
         TextView numero = (TextView) row.findViewById(R.id.numero);
         TextView ordreLiv = (TextView) row.findViewById(R.id.ordreLiv);
 
-        Commande item = values.get(position);
         String pAdresse = item.getAdresse() + " " + item.getCodePostal() + " " + item.getVille();
         adresse.setText(pAdresse);
         String pNum = "#" + item.getIdCommande();
         numero.setText(pNum);
         String pOrdre = "" + item.getOrdre();
         ordreLiv.setText(pOrdre);
+
         return row;
     }
 }

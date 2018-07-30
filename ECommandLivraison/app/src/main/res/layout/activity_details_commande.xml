@@ -26,8 +26,8 @@
         android:clickable="false">
 
         <Button
-            android:id="@+id/btn_validation_commande"
-            android:layout_width="136dp"
+            android:id="@+id/btn_annulation_commande"
+            android:layout_width="162dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/viewpager"
             android:layout_gravity="bottom|left"
@@ -44,7 +44,7 @@
             tools:layout_editor_absoluteY="463dp" />
 
         <Button
-            android:id="@+id/btn_annulation_commande"
+            android:id="@+id/btn_validation_commande"
             android:layout_width="207dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/viewpager"
@@ -54,7 +54,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/btn_validation_commande"
+            android:layout_toRightOf="@+id/btn_annulation_commande"
             android:background="@color/colorAccent"
             android:text="@string/valid_btn"
             android:textColor="@android:color/white"

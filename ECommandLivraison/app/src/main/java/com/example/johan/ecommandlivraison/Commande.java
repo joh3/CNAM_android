@@ -2,6 +2,7 @@ package com.example.johan.ecommandlivraison;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Commande implements Serializable {
@@ -15,10 +16,12 @@ public class Commande implements Serializable {
     private int idTournee;
     private boolean isLivre;
     private String etatCommande;
+    private String dateDebut;
+    private String dateFin;
 
     public Commande(){}
 
-    public Commande(int idCommande, float prixTotal, String adresse, String codePostal, String ville, int ordre, int idTournee, boolean isLivre, String etatCommande) {
+    public Commande(int idCommande, float prixTotal, String adresse, String codePostal, String ville, int ordre, int idTournee, boolean isLivre, String etatCommande, String dateDebut, String dateFin) {
         this.idCommande = idCommande;
         this.prixTotal = prixTotal;
         this.adresse = adresse;
@@ -28,6 +31,24 @@ public class Commande implements Serializable {
         this.idTournee = idTournee;
         this.isLivre = isLivre;
         this.etatCommande = etatCommande;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
+    }
+
+    public String getDateDeb() {
+        return dateDebut;
+    }
+
+    public void setDateDeb(String dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public String getDateFin() {
+        return dateFin;
+    }
+
+    public void setDateFin(String dateFin) {
+        this.dateFin = dateFin;
     }
 
     public String getEtatCommande() {

@@ -8,19 +8,67 @@
     tools:context=".ListeCommandeActivity"
     tools:showIn="@layout/app_bar_liste_commande">
 
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
+        <Button
+            android:id="@+id/buttonDebut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/centerPoint"
+            android:background="@drawable/btn_border"
+            android:drawableLeft="@drawable/ic_play_arrow_black_24dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Démarrer" />
+
+        <TextView
+            android:id="@+id/centerPoint"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="" />
+
+        <Button
+            android:id="@+id/buttonFin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/centerPoint"
+            android:background="@drawable/btn_border"
+            android:drawableLeft="@drawable/ic_stop_black_24dp"
+            android:enabled="false"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Terminer" />
+
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/listviewCommandes"
-        android:layout_width="344dp"
-        android:layout_height="502dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

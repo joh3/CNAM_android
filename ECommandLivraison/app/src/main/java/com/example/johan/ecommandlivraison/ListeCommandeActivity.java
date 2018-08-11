@@ -22,6 +22,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,12 +74,86 @@ public class ListeCommandeActivity extends AppCompatActivity
 
         instanceApi = initAPIService();
         chargerDonnees(instanceApi);
+
+        Button buttonDebut= (Button) findViewById(R.id.buttonDebut);
+        buttonDebut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button btnDeb = (Button) findViewById(R.id.buttonDebut);
+                Button btnFin = (Button) findViewById(R.id.buttonFin);
+                setDateTournee(true);
+                btnDeb.setEnabled(false);
+                btnFin.setEnabled(true);
+            }
+        });
+
+        Button buttonFin= (Button) findViewById(R.id.buttonFin);
+        buttonFin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Button btnDeb = (Button) findViewById(R.id.buttonDebut);
+                Button btnFin = (Button) findViewById(R.id.buttonFin);
+                setDateTournee(false);
+                btnDeb.setEnabled(false);
+                btnFin.setEnabled(false);
+                chargerDonnees(initAPIService());
+            }
+        });
     }
 
 
     public void chargerDonnees(APIRestService api){
         remplirListeCommande(api);
         remplirInfosLivreur(api,"1");
+    }
+
+    public void setDateTournee(boolean dateDebut){
+        String idTournee = sharedPreferences.getString("idTournee","0");
+        //envoi de la date de début
+        if(dateDebut){
+            Call<Object> requestDeb = instanceApi.postDebutTrn(idTournee);
+            requestDeb.enqueue(new Callback<Object>(){
+                @Override
+                public void onResponse(Call<Object> request, Response<Object> response) {
+                    Log.d("Message"," ENVOI DATE DEBUT OK");
+                    addSharedPreferences("dateDebut", "true");
+                }
+                @Override
+                public void onFailure(Call<Object> call, Throwable t) {
+                    Log.d("Message2", t.toString());
+                    Log.d("Message2", "onResponse: " + call.request().toString());
+                }
+            });
+        }
+        //envoi de la date de fin
+        else {
+            Call<Object> requestEnd = instanceApi.postFinTrn(idTournee);
+            requestEnd.enqueue(new Callback<Object>(){
+                @Override
+                public void onResponse(Call<Object> request, Response<Object> response) {
+                    Log.d("Message"," ENVOI DATE FIN OK");
+                    //changement de l'état du livreur
+                    String idLiv = sharedPreferences.getString("idLivreur", "0");
+                    Call<Object> requestStateLiv = instanceApi.postEtatLiv("Disponible",""+idLiv);
+                    requestStateLiv.enqueue(new Callback<Object>(){
+                        @Override
+                        public void onResponse(Call<Object> request, Response<Object> response) {
+                            Log.d("Message"," ENVOI ETAT LIV OK");
+                        }
+                        @Override
+                        public void onFailure(Call<Object> call, Throwable t) {
+                            Log.d("Message2", t.toString());
+                            Log.d("Message2", "onResponse: " + call.request().toString());
+                        }
+                    });
+                }
+                @Override
+                public void onFailure(Call<Object> call, Throwable t) {
+                    Log.d("Message2", t.toString());
+                    Log.d("Message2", "onResponse: " + call.request().toString());
+                }
+            });
+        }
     }
 
 
@@ -88,25 +163,54 @@ public class ListeCommandeActivity extends AppCompatActivity
         call.enqueue(new Callback<List<Commande>>() {
             @Override
             public void onResponse(Call<List<Commande>> call, Response<List<Commande>> response) {
+                Button btnDeb = (Button) findViewById(R.id.buttonDebut);
+                Button btnFin = (Button) findViewById(R.id.buttonFin);
                 List<Commande> commandes = response.body();
-                addSharedPreferences("idTournee", commandes.get(0).getIdTournee()+"");
-                mListview.setAdapter(new CommandeAdapter(ListeCommandeActivity.this, commandes));
-                mListview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-                    @Override
-                    public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-                        Commande item = (Commande) adapter.getItemAtPosition(position);
-                        Intent intent = new Intent(ListeCommandeActivity.this,DetailsCommandeActivity.class);
-//                      intent.putExtra("idCmd",item.getIdCommande());
-//                      intent.putExtra("adrCmd",item.getAdresse()+" "+item.getCodePostal()+" "+item.getVille());
-                        intent.putExtra("Commande", item);
-                        startActivity(intent);
+                if(commandes.size() != 0) {
+                    addSharedPreferences("idTournee", commandes.get(0).getIdTournee() + "");
+                    //traitement des boutons
+                    Log.d("MESSAGE MESSAGE MESSAGE", "" + commandes.get(0).getDateDeb());
+                    Log.d("MESSAGE MESSAGE MESSAGE", "" + commandes.get(0).getDateFin());
+                    addSharedPreferences("dateDebut", commandes.get(0).getDateDeb());
+
+                    if (commandes.get(0).getDateDeb() == null) {
+                        btnDeb.setEnabled(true);
+                        btnFin.setEnabled(false);
+
+                    } else {
+                        if (commandes.get(0).getDateFin() == null) {
+                            btnDeb.setEnabled(false);
+                            btnFin.setEnabled(true);
+                        }
                     }
-                });
+
+                    mListview.setAdapter(new CommandeAdapter(ListeCommandeActivity.this, commandes));
+                    mListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+                            String datDeb = sharedPreferences.getString("dateDebut", "null");
+                            if (datDeb.equalsIgnoreCase("null")) {
+                                Toast.makeText(ListeCommandeActivity.this, "Vous devez lancer la tournée, avant de commencer. ", Toast.LENGTH_LONG).show();
+                            } else {
+                                Commande item = (Commande) adapter.getItemAtPosition(position);
+                                Intent intent = new Intent(ListeCommandeActivity.this, DetailsCommandeActivity.class);
+                                //                      intent.putExtra("idCmd",item.getIdCommande());
+                                //                      intent.putExtra("adrCmd",item.getAdresse()+" "+item.getCodePostal()+" "+item.getVille());
+                                intent.putExtra("Commande", item);
+                                startActivity(intent);
+                            }
+
+
+                        }
+                    });
+                }
+                else {
+                    btnDeb.setEnabled(false);
+                    btnFin.setEnabled(false);
+                }
             }
             @Override
             public void onFailure(Call<List<Commande>> call, Throwable t) {
-                Log.d("message1", t.toString());
-                Log.d("message2", "onResponse: " + call.request().toString());
                 Toast.makeText(ListeCommandeActivity.this, "Aucune connexion avec le server, veillez recommencer",Toast.LENGTH_SHORT).show();
             }
         });

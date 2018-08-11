@@ -32,4 +32,16 @@ public interface APIRestService {
     @FormUrlEncoded
     @POST("commande/livraison/")
     Call<Object> postEtatCmd(@Field("idCommande") String idCommande, @Field("etatCommande") String etatCommande);
+
+    @FormUrlEncoded
+    @POST("commande/livraison/debut")
+    Call<Object> postDebutTrn(@Field("idTournee") String idTournee);
+
+    @FormUrlEncoded
+    @POST("commande/livraison/fin")
+    Call<Object> postFinTrn(@Field("idTournee") String idTournee);
+
+    @FormUrlEncoded
+    @POST("/livreur/etat")
+    Call<Object> postEtatLiv(@Field("statut") String statut, @Field("idLivreur") String idLivreur);
 }

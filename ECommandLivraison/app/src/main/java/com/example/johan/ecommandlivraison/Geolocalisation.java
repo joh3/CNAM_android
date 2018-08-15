@@ -27,12 +27,6 @@ public class Geolocalisation extends Service {
     private static final int LOCATION_INTERVAL = 1000;
     private static final float LOCATION_DISTANCE = 10f;
     private Socket mSocket;
-    {
-        try {
-            IP = "192.168.1.20";
-            mSocket = IO.socket("http://"+IP+":3000/");
-        } catch (URISyntaxException e) {}
-    }
 
     private class LocationListener implements android.location.LocationListener {
         Location mLastLocation;
@@ -106,6 +100,15 @@ public class Geolocalisation extends Service {
     @Override
     public void onCreate()
     {
+        SharedPreferences prfs = getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        String IP = prfs.getString("IP", "");
+        {
+            try {
+                if(IP != "") {
+                    mSocket = IO.socket("http://" + IP + ":3000/");
+                }
+            } catch (URISyntaxException e) {}
+        }
         mSocket.connect();
         Log.e(TAG, "onCreate");
         initializeLocationManager();

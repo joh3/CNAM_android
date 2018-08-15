@@ -47,7 +47,7 @@ public class ListeCommandeActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        chargerDonnees(instanceApi);
+        chargerDonnees(initAPIService());
         Log.d("RESUME", "onResume: ");
     }
 
@@ -96,7 +96,9 @@ public class ListeCommandeActivity extends AppCompatActivity
                 setDateTournee(false);
                 btnDeb.setEnabled(false);
                 btnFin.setEnabled(false);
-                chargerDonnees(initAPIService());
+                btnFin.setEnabled(false);
+                finish();
+                startActivity(getIntent());
             }
         });
     }
@@ -299,7 +301,7 @@ public class ListeCommandeActivity extends AppCompatActivity
 //            return true;
 //        }
         if (id == R.id.action_reload) {
-            chargerDonnees(instanceApi);
+            chargerDonnees(initAPIService());
             Toast.makeText(ListeCommandeActivity.this,"Actualisation...", Toast.LENGTH_SHORT).show();
             return true;
         }
